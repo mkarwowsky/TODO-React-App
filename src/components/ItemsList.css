@@ -1,0 +1,29 @@
+.items-list__template {
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    flex-wrap: wrap;
+    width: 80%;
+    height: auto;
+}
+
+.items-list__item-header {
+    background: #61dafb;
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    margin: 1rem;
+    width: 15vw;
+}
+
+.items-list__item-description {
+    display: flex;
+    justify-content: flex-start;
+    padding: 0.5rem;
+    margin: 1rem;
+    width: 15vw;
+}
+
+ul, li {
+    list-style: none;
+}

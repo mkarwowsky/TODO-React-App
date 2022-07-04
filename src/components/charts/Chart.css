@@ -1,0 +1,13 @@
+.chart__chart-revealed {
+    height: auto;
+    max-width: 20rem;
+    display: flex;
+    word-break: break-all;
+}
+
+.chart__chart {
+    height: auto;
+    max-width: 20rem;
+    display: flex;
+    word-break: break-all;
+}
