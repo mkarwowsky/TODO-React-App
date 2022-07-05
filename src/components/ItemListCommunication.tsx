@@ -81,13 +81,14 @@ const ItemListCommunication = () => {
     const [items, setItems] = useState<ItemInterface[]>([]);
     const [itemsToFilter, setItemsToFilter] = useState<ItemInterface[]>([]);
     const [lists, setLists] = useState<ListInterface[]>(INITIAL_LIST_ARRAY);
+    let itemsCopyArray: ItemInterface[] = items;
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem('items') || '{}');
         if (items) {
             setItems(items);
         }
-    }, []);
+    },[]);
 
     useEffect(() => {
         localStorage.setItem('items', JSON.stringify(items));
@@ -128,11 +129,12 @@ const ItemListCommunication = () => {
         })
     }
 
-    const chooseListHandler = (listItem: ListInterface, items: ItemInterface[], onClick: Function) => {
-        console.log(items.filter(item => item.type === listItem.type));
-        setItems(items.filter(item => item.type === listItem.type));
+    const chooseListHandler = (listItem: ListInterface, items: ItemInterface[]) => {
+        // console.log(itemsCopyArray.filter(item => item.type === listItem.type));
+        setItemsToFilter(itemsCopyArray.filter(item => item.type === listItem.type));
     }
 
+    console.log(itemsToFilter);
     return (
         <div>
             <div className="todos__lists-header">
@@ -150,7 +152,7 @@ const ItemListCommunication = () => {
                     lists={lists}
                     onAddList={addListHandler}
                     onChooseList={chooseListHandler}
-                    items={items}/>
+                    items={itemsToFilter}/>
             </div>
         </div>
     )
