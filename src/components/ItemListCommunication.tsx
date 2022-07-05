@@ -85,10 +85,10 @@ const ItemListCommunication = () => {
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem('items') || '{}');
-            if (items) {
+        if (items) {
             setItems(items);
         }
-    },[]);
+    }, []);
 
     useEffect(() => {
         localStorage.setItem('items', JSON.stringify(items));
@@ -118,21 +118,23 @@ const ItemListCommunication = () => {
     const addItemHandler = (item: ItemInterface) => {
         setItems((items) => {
             return [...items, item];
-            localStorage.setItem('items', JSON.stringify([...items, item]));
         })
+        localStorage.setItem('items', JSON.stringify([...items, item]));
     }
 
     const addListHandler = (list: ListInterface) => {
         setLists((lists: ListInterface[]) => {
             return [...lists, list];
-            localStorage.setItem('lists', JSON.stringify([...lists, list]));
         })
+        localStorage.setItem('lists', JSON.stringify([...lists, list]));
     }
 
     const chooseListHandler = (listItem: ListInterface, items: ItemInterface[]) => {
         setFilteredItems(itemsCopyArray.filter(item => item.type === listItem.type));
     }
-    
+
+    console.log(filteredItems);
+
     return (
         <div>
             <div className="todos__lists-header">
@@ -140,7 +142,7 @@ const ItemListCommunication = () => {
             </div>
             <div className="todos__items">
                 <ItemsList
-                    items={filteredItems}
+                    items={items}
                     amountOfItems={items.length}
                     onItemStatusClickUpdate={onItemStatusClickUpdate}
                     onItemClickRevealUpdate={onItemClickRevealUpdate}
