@@ -79,13 +79,13 @@ let INITIAL_LIST_ARRAY: ListInterface[] = [
 
 const ItemListCommunication = () => {
     const [items, setItems] = useState<ItemInterface[]>([]);
-    const [itemsToFilter, setItemsToFilter] = useState<ItemInterface[]>([]);
+    const [filteredItems, setFilteredItems] = useState<ItemInterface[]>([]);
     const [lists, setLists] = useState<ListInterface[]>(INITIAL_LIST_ARRAY);
     let itemsCopyArray: ItemInterface[] = items;
 
     useEffect(() => {
         const items = JSON.parse(localStorage.getItem('items') || '{}');
-        if (items) {
+            if (items) {
             setItems(items);
         }
     },[]);
@@ -130,11 +130,9 @@ const ItemListCommunication = () => {
     }
 
     const chooseListHandler = (listItem: ListInterface, items: ItemInterface[]) => {
-        // console.log(itemsCopyArray.filter(item => item.type === listItem.type));
-        setItemsToFilter(itemsCopyArray.filter(item => item.type === listItem.type));
+        setFilteredItems(itemsCopyArray.filter(item => item.type === listItem.type));
     }
-
-    console.log(itemsToFilter);
+    
     return (
         <div>
             <div className="todos__lists-header">
@@ -142,7 +140,7 @@ const ItemListCommunication = () => {
             </div>
             <div className="todos__items">
                 <ItemsList
-                    items={items}
+                    items={filteredItems}
                     amountOfItems={items.length}
                     onItemStatusClickUpdate={onItemStatusClickUpdate}
                     onItemClickRevealUpdate={onItemClickRevealUpdate}
@@ -152,7 +150,7 @@ const ItemListCommunication = () => {
                     lists={lists}
                     onAddList={addListHandler}
                     onChooseList={chooseListHandler}
-                    items={itemsToFilter}/>
+                    items={filteredItems}/>
             </div>
         </div>
     )
