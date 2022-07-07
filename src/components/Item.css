@@ -26,6 +26,10 @@
     flex-direction: column;
 }
 
+.task-status-button-deleted {
+    display: none;
+}
+
 .item__item-header-done {
     background: #a2cf6e;
     border: 1px solid #a2cf6e;

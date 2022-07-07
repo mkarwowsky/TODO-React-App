@@ -1,55 +1,16 @@
 import React, {useEffect, useState} from "react";
 import Item, {ItemInterface} from "./Item";
-import {ListInterface} from "./lists/List";
-import {TASKTYPE} from "./TaskStatus";
-import ItemsList from "./ItemsList";
 import ListsList from "./lists/ListsList";
 import NewItem from "./NewItem";
+import List, {ListInterface} from "./lists/List";
+import {TASKTYPE} from "./TaskStatus";
 
 import "./pages/Todos.css"
+import './charts/Chart.css'
+import './ItemsList.css'
+import listsList from "./lists/ListsList";
 
-
-const INITIAL_ARRAY: ItemInterface[] = [
-    // {
-    //     id: 1,
-    //     title: "Zakupy",
-    //     description: "Mąka, por, ziemniaki, cebula, rabarbar",
-    //     type: TASKTYPE.TODO,
-    //     reveal: false
-    // }
-    // {
-    //     id: 2,
-    //     title: "Piątek",
-    //     description: "Lekarz i umówić dentystę.",
-    //     type: TASKTYPE.BLOCKED,
-    //     blockNote: "Lekarz odezwie się.",
-    //     reveal: false
-    // },
-    // {
-    //     id: 3,
-    //     title: "Urodziny mamy",
-    //     description: " Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać.",
-    //     type: TASKTYPE.TODO,
-    //     reveal: false
-    // },
-    // {
-    //     id: 4,
-    //     title: "Wakacje",
-    //     description: "Zarezerwować bilety",
-    //     type: TASKTYPE.DONE,
-    //     reveal: false
-    // },
-    // {
-    //     id: 5,
-    //     title: "Urodziny mamy",
-    //     description: " Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać. Zadzwonić do cioci bernadetty i zapytać czy będzie coś przyrządzać.",
-    //     type: TASKTYPE.BLOCKED,
-    //     blockNote: "Siostra zajmie się wszystkim",
-    //     reveal: false
-    // }
-]
-
-let INITIAL_LIST_ARRAY: ListInterface[] = [
+const INITIAL_LIST_ARRAY: ListInterface[] = [
     {
         id: 1,
         title: "ALL",
@@ -81,10 +42,29 @@ const ItemListCommunication = () => {
     const [items, setItems] = useState<ItemInterface[]>([]);
     const [filteredItems, setFilteredItems] = useState<ItemInterface[]>([]);
     const [lists, setLists] = useState<ListInterface[]>(INITIAL_LIST_ARRAY);
+    let listsCopyArray: ListInterface[] = lists;
     let itemsCopyArray: ItemInterface[] = items;
 
     useEffect(() => {
-        const items = JSON.parse(localStorage.getItem('items') || '{}');
+        for (let i = 0; i < items.length; i++) {
+            if (items[i].type === TASKTYPE.DELETED) {
+                items.splice(i, 1);
+                setItems(items);
+            }
+        }
+    })
+
+    useEffect(() => {
+        for (let i = 0; i < lists.length; i++) {
+            if (lists[i].type === TASKTYPE.DELETED) {
+                lists.splice(i, 1);
+                setLists(lists);
+            }
+        }
+    })
+
+    useEffect(() => {
+        const items = JSON.parse(localStorage.getItem('items') || '[]');
         if (items) {
             setItems(items);
         }
@@ -93,6 +73,17 @@ const ItemListCommunication = () => {
     useEffect(() => {
         localStorage.setItem('items', JSON.stringify(items));
     }, [items]);
+
+    useEffect(() => {
+        const lists = JSON.parse(localStorage.getItem('lists') || '[]');
+        if (lists) {
+            setLists(lists);
+        }
+    }, []);
+
+    useEffect(() => {
+        localStorage.setItem('lists', JSON.stringify(lists));
+    }, [lists]);
 
     const onItemStatusClickUpdate = (itemId: number, status: TASKTYPE) => {
         const findItem = items.findIndex(itemTooDo => itemTooDo.id === itemId);
@@ -130,10 +121,14 @@ const ItemListCommunication = () => {
     }
 
     const chooseListHandler = (listItem: ListInterface, items: ItemInterface[]) => {
-        setFilteredItems(itemsCopyArray.filter(item => item.type === listItem.type));
+        listItem.type === TASKTYPE.ALL ? setFilteredItems(itemsCopyArray) : setFilteredItems(itemsCopyArray.filter(item => item.type === listItem.type));
     }
 
-    console.log(filteredItems);
+    const onItemDeleteUpdate = () => {}
+
+    const onDeleteList = (listItem: ListInterface) => {
+        console.log(listItem.id + " " + listItem.type + " " + listItem.title);
+    }
 
     return (
         <div>
@@ -141,17 +136,27 @@ const ItemListCommunication = () => {
                 <NewItem onAddItem={addItemHandler}/>
             </div>
             <div className="todos__items">
-                <ItemsList
-                    items={items}
-                    amountOfItems={items.length}
-                    onItemStatusClickUpdate={onItemStatusClickUpdate}
-                    onItemClickRevealUpdate={onItemClickRevealUpdate}
-                    onItemKeyPressRevealUpdate={onItemClickRevealUpdate}
-                    onItemBlockNoteUpdate={onItemBlockNoteUpdate}/>
+                <li className="items-list__template">
+                    {filteredItems.map((item, index) => (
+                        <ol key={item.id} id={item.id.toString()}>
+                            <Item
+                                tabIndex={0}
+                                itemInterface={item}
+                                onItemStatusClickUpdate={onItemStatusClickUpdate}
+                                onItemClickRevealUpdate={onItemClickRevealUpdate}
+                                onItemKeyPressRevealUpdate={onItemClickRevealUpdate}
+                                onItemBlockNoteUpdate={onItemBlockNoteUpdate}
+                                onItemDeleteUpdate={onItemDeleteUpdate}
+                            />
+                        </ol>
+                    ))}
+                </li>
                 <ListsList
                     lists={lists}
+                    buildInLists={INITIAL_LIST_ARRAY}
                     onAddList={addListHandler}
                     onChooseList={chooseListHandler}
+                    onDeleteList={onDeleteList}
                     items={filteredItems}/>
             </div>
         </div>

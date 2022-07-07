@@ -7,7 +7,9 @@ export enum TASKTYPE {
     TODO = "TODO",
     DONE = "DONE",
     BLOCKED = "BLOCKED",
-    ALL = "ALL"
+    DELETED = "DELETED",
+    ALL = "ALL",
+    NORMAL = "NORMAL"
 }
 
 const TaskStatus = (props: { itemId: number, itemStatus: TASKTYPE}) => {

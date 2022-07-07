@@ -7,7 +7,8 @@ const TodoList = (props: {
     onItemStatusClickUpdate: Function,
     onItemClickRevealUpdate: Function,
     onItemKeyPressRevealUpdate: Function,
-    onItemBlockNoteUpdate: Function
+    onItemBlockNoteUpdate: Function,
+    onItemDeleteUpdate: Function
 }) => {
 
     return (
@@ -22,6 +23,7 @@ const TodoList = (props: {
                             onItemClickRevealUpdate={props.onItemClickRevealUpdate}
                             onItemKeyPressRevealUpdate={props.onItemKeyPressRevealUpdate}
                             onItemBlockNoteUpdate={props.onItemBlockNoteUpdate}
+                            onItemDeleteUpdate={props.onItemDeleteUpdate}
                         />
                     </ol>
                 ))}

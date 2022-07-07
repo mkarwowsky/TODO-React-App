@@ -2,7 +2,6 @@ import Item from "./Item";
 import {ItemInterface} from './Item';
 
 import './ItemsList.css'
-import React, {useEffect} from "react";
 
 const ItemsList = (props: {
     items: ItemInterface[],
@@ -10,7 +9,8 @@ const ItemsList = (props: {
     onItemStatusClickUpdate: Function,
     onItemClickRevealUpdate: Function,
     onItemKeyPressRevealUpdate: Function,
-    onItemBlockNoteUpdate: Function
+    onItemBlockNoteUpdate: Function,
+    onItemDeleteUpdate: Function
 }) => {
     return (
         <li className="items-list__template">
@@ -23,6 +23,7 @@ const ItemsList = (props: {
                         onItemClickRevealUpdate={props.onItemClickRevealUpdate}
                         onItemKeyPressRevealUpdate={props.onItemClickRevealUpdate}
                         onItemBlockNoteUpdate={props.onItemBlockNoteUpdate}
+                        onItemDeleteUpdate={props.onItemDeleteUpdate}
                     />
                 </ol>
             ))}

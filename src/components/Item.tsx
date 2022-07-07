@@ -6,6 +6,7 @@ import Chart from "./charts/Chart";
 import {useEffect, useState} from "react";
 import BlockNote from "./BlockNote";
 import {FiLock, FiUnlock} from "react-icons/fi"
+import {AiOutlineDelete} from "react-icons/ai"
 
 export interface ItemInterface {
     id: number,
@@ -22,11 +23,13 @@ const Item = (props: {
     onItemStatusClickUpdate: Function,
     onItemClickRevealUpdate: Function,
     onItemKeyPressRevealUpdate: Function,
-    onItemBlockNoteUpdate: Function
+    onItemBlockNoteUpdate: Function,
+    onItemDeleteUpdate: Function
 }) => {
     const [status, setStatus] = useState(props.itemInterface.type);
     const [isDone, setIsDone] = useState("item__item-header-done");
     const [isBlocked, setIsBlocked] = useState("task-status-button-blocked")
+    const [isDeleted, setIsDeleted] = useState("")
 
     useEffect(() => {
         props.onItemStatusClickUpdate(props.itemInterface.id, status, props.onItemStatusClickUpdate);
@@ -48,6 +51,12 @@ const Item = (props: {
         props.onItemStatusClickUpdate(props.itemInterface.id, status, props.onItemStatusClickUpdate);
     }
 
+    const onHandleDeleteItem = () => {
+        setStatus(TASKTYPE.DELETED);
+        setIsDeleted("task-status-button-deleted");
+        props.onItemDeleteUpdate(props.itemInterface.id, props.itemInterface.type, props.onItemDeleteUpdate);
+    }
+
     const todoItem: ItemInterface = {
         id: props.itemInterface.id,
         title: props.itemInterface.title,
@@ -58,7 +67,7 @@ const Item = (props: {
     }
 
     return (
-        <div>
+        <div className={isDeleted} key={Math.random()}>
             <div className="item__template">
                 <div className="item__header">
                     <div onDoubleClick={onHandleIsDone}
@@ -71,6 +80,10 @@ const Item = (props: {
                             <button onClick={onHandleIsBlock}
                                     className={isBlocked}>
                                 <div>{(status === TASKTYPE.BLOCKED) ? <FiLock/> : <FiUnlock/>}</div>
+                            </button>
+                            <button onClick={onHandleDeleteItem}
+                                    className={isBlocked}>
+                                <div><AiOutlineDelete/></div>
                             </button>
                         </div>
                         <div className="item__item-header-title">{todoItem.title}</div>

@@ -15,7 +15,7 @@ const ListsForm = (props: { onSaveListData: Function }) => {
 
         const listData = {
             title: enteredListTitle,
-            type: TASKTYPE.TODO,
+            type: TASKTYPE.NORMAL,
             items: []
         }
         if (enteredListTitle.length >= 2){
