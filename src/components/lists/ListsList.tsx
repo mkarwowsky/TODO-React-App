@@ -1,56 +1,50 @@
-import React from "react";
+import React, {useEffect} from "react";
 import List, {ListInterface} from "./List"
 import NewList from "./NewList"
+import {ItemInterface} from "../Item";
+
 
 import "./ListsList.css"
 import '../Form.css'
-import {ItemInterface} from "../Item";
 
 const ListsList = (props: {
     lists: ListInterface[],
     buildInLists: ListInterface[],
     onAddList: Function,
     onChooseList: Function,
-    onDeleteList: Function,
+    onDeleteListUpdate: Function,
     items: ItemInterface[]
 }) => {
-
     const buildInList: boolean = true;
 
     return (
         <div className="lists-list__template">
             <NewList onAddList={props.onAddList}/>
-            <li>
-                {props.buildInLists.map((list, index) => (
-                    <ol key={index} id={list.id.toString()}>
+            <div>
+                {props.buildInLists.map((list) => (
                         <List
-                            listId={list.id}
-                            listTitle={list.title}
-                            listType={list.type}
-                            listItems={list.items}
+                            key={list.id}
                             listInterface={list}
                             onChooseList={props.onChooseList}
-                            onDeleteList={props.onDeleteList}
+                            onDeleteListUpdate={props.onDeleteListUpdate}
                             buildInList={buildInList}
-                            items={props.items}/>
-                    </ol>
+                            items={props.items}
+                            lists={props.lists}/>
                 ))}
                 <br></br>
-                {props.lists.map((list, index) => (
-                    <ol key={index} id={list.id.toString()}>
+                <ol>
+                    {props.lists.map((list) => (
                         <List
-                            listId={list.id}
-                            listTitle={list.title}
-                            listType={list.type}
-                            listItems={list.items}
+                            key={list.id}
                             listInterface={list}
                             onChooseList={props.onChooseList}
-                            onDeleteList={props.onDeleteList}
+                            onDeleteListUpdate={props.onDeleteListUpdate}
                             buildInList={!buildInList}
-                            items={props.items}/>
-                    </ol>
-                ))}
-            </li>
+                            items={props.items}
+                            lists={props.lists}/>
+                    ))}
+                </ol>
+            </div>
         </div>
     )
 }

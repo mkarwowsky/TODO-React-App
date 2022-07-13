@@ -32,29 +32,3 @@ const ItemsList = (props: {
 }
 
 export default ItemsList;
-
-// const [items, setItems] = useState<ItemInterface[]>([]);
-//
-// const onItemStatusClickUpdate = (itemId: number) => {
-//     const findItem = items.findIndex(itemTooDo => itemTooDo.id === itemId);
-//     items[findItem].type === TASKTYPE.TODO ? items[findItem].type = TASKTYPE.DONE : items[findItem].type = TASKTYPE.TODO
-//     setItems(items);
-// }
-//
-// const onItemClickRevealUpdate = (itemId: number) => {
-//     const findItem = items.findIndex(itemTooDo => itemTooDo.id === itemId);
-//     items[findItem].reveal = !items[findItem].reveal;
-//     setItems(items);
-// }
-//
-// const onItemBlockNoteUpdate = (itemId: number, blockNote: string) => {
-//     const findItem = items.findIndex(itemTooDo => itemTooDo.id === itemId);
-//     items[findItem].blockNote = blockNote;
-//     setItems(items);
-// }
-//
-// const addItemHandler = (item: ItemInterface) => {
-//     setItems((items) => {
-//         return [...items, item];
-//     })
-// }

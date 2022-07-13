@@ -1,11 +1,12 @@
 import {ItemInterface} from "../Item";
+import {TASKTYPE} from "../TaskStatus"
+import {AiOutlineDelete, AiOutlineEdit} from "react-icons/ai"
+import {useEffect} from "react";
+
 import "./List.css"
 import "../Form.css"
 import '../TaskStatus.css'
 import '../Item.css'
-import {TASKTYPE} from "../TaskStatus"
-import {AiOutlineDelete, AiOutlineEdit} from "react-icons/ai"
-import {useState} from "react";
 
 export interface ListInterface {
     id: number,
@@ -15,49 +16,41 @@ export interface ListInterface {
 }
 
 const List = (props: {
-    listId: number,
-    listTitle: string,
-    listType: TASKTYPE,
-    listItems: ItemInterface[],
     listInterface: ListInterface,
     onChooseList: Function,
-    onDeleteList: Function,
+    onDeleteListUpdate: Function,
     buildInList: boolean,
-    items: ItemInterface[]
+    items: ItemInterface[],
+    lists: ListInterface[]
 }) => {
-    const [isDeleted, setIsDeleted] = useState("")
-    const [status, setStatus] = useState(props.listType);
-
     const listItem: ListInterface = {
-        id: props.listId,
-        title: props.listTitle,
-        type: props.listType,
-        items: props.listItems
+        id: props.listInterface.id,
+        title: props.listInterface.title,
+        type: props.listInterface.type,
+        items: props.listInterface.items
     }
 
     const handleClick = () => {
         props.onChooseList(listItem, props.items);
     }
 
-    const handleDelete = () => {
-        setIsDeleted("task-status-button-deleted");
-        setStatus(TASKTYPE.DELETED);
-        listItem.type = status;
-        props.onDeleteList(listItem, props.onDeleteList);
+    const onHandleDeleteList = () => {
+        const findItem = props.lists.findIndex(itemTooDo => itemTooDo.id === listItem.id);
+        props.lists[findItem].type = TASKTYPE.DELETED;
+        console.log(props.lists[findItem]);
+        props.onDeleteListUpdate(listItem.id, props.listInterface.type, props.lists, props.onDeleteListUpdate);
     }
 
     return (
-        <div className={isDeleted}>
-            <li key={Math.random()} className="list__list">
+            <div className="list__list">
                 <div className="list__list-items">
-                    <div className="item-button-list" onClick={handleClick}>{listItem.title}</div>
+                    <div className="item-button-list" onClick={handleClick}>{props.listInterface.title}</div>
                     {props.buildInList === false &&
-                        <div className="task-status-button" onClick={handleDelete}><AiOutlineDelete/></div>}
+                        <div className="task-status-button" onClick={onHandleDeleteList}><AiOutlineDelete/></div>}
                     {props.buildInList === false &&
-                        <div className="task-status-button" onClick={handleDelete}><AiOutlineEdit/></div>}
+                        <div className="task-status-button" onClick={onHandleDeleteList}><AiOutlineEdit/></div>}
                 </div>
-            </li>
-        </div>
+            </div>
     )
 }
 
