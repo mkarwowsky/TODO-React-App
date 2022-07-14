@@ -168,7 +168,7 @@ const ItemListCommunication = () => {
         })
         localStorage.setItem('items', JSON.stringify([...items, item]));
 
-        if (selectedList) {
+        if (selectedList !== 1) {
             const findItem = lists.findIndex(list => list.id === selectedList);
             lists[findItem].items.push(item);
             setLists(lists);
@@ -232,6 +232,15 @@ const ItemListCommunication = () => {
         setFilteredItems(itemsCopyArray);
     }
 
+    const onEditListTitle = (listId: number, listTitle: string, lists: ListInterface[]) => {
+        let findItem = lists.findIndex(list => list.id === listId);
+        console.log(listId + " " + lists[findItem].title);
+        lists[findItem].title = listTitle;
+        setLists(lists);
+        localStorage.setItem('lists', JSON.stringify(lists));
+        console.log(lists);
+    }
+
     return (
         <div>
             <div className="todos__lists-header">
@@ -259,7 +268,8 @@ const ItemListCommunication = () => {
                     onAddList={addListHandler}
                     onChooseList={chooseListHandler}
                     onDeleteListUpdate={onDeleteListUpdate}
-                    items={filteredItems}/>
+                    items={filteredItems}
+                    onEditListTitle={onEditListTitle}/>
             </div>
         </div>
     )

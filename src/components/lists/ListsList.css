@@ -36,6 +36,10 @@ ul, li {
     border-bottom: 1px #282c34;
 }
 
+.form__input-edit-item {
+    margin-top: 0.5rem;
+}
+
 .form__input {
     font-family: 'Roboto', sans-serif;
     color: #333;

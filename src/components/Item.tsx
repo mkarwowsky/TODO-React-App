@@ -52,9 +52,11 @@ const Item = (props: {
     }
 
     const onHandleDeleteItem = () => {
-        setStatus(TASKTYPE.DELETED);
-        setIsDeleted("task-status-button-deleted");
-        props.onItemDeleteUpdate(props.itemInterface.id, props.itemInterface.type, props.onItemDeleteUpdate);
+        if(props.itemInterface.type !== TASKTYPE.BLOCKED) {
+            setStatus(TASKTYPE.DELETED);
+            setIsDeleted("task-status-button-deleted");
+            props.onItemDeleteUpdate(props.itemInterface.id, props.itemInterface.type, props.onItemDeleteUpdate);
+        }
     }
 
     const todoItem: ItemInterface = {

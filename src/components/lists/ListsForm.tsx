@@ -18,7 +18,7 @@ const ListsForm = (props: { onSaveListData: Function }) => {
             type: TASKTYPE.NORMAL,
             items: []
         }
-        if (enteredListTitle.length >= 2){
+        if (enteredListTitle.length >= 2) {
             props.onSaveListData(listData);
             setEnteredListTitle('');
         }
@@ -36,7 +36,7 @@ const ListsForm = (props: { onSaveListData: Function }) => {
                                type="text"
                                placeholder="Title"
                                minLength={2}
-                               maxLength={25}
+                               maxLength={15}
                                value={enteredListTitle}
                                onChange={titleChangeHandler}
                         />

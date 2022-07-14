@@ -13,7 +13,8 @@ const ListsList = (props: {
     onAddList: Function,
     onChooseList: Function,
     onDeleteListUpdate: Function,
-    items: ItemInterface[]
+    items: ItemInterface[],
+    onEditListTitle: Function
 }) => {
     const buildInList: boolean = true;
 
@@ -29,7 +30,8 @@ const ListsList = (props: {
                             onDeleteListUpdate={props.onDeleteListUpdate}
                             buildInList={buildInList}
                             items={props.items}
-                            lists={props.lists}/>
+                            lists={props.lists}
+                            onEditListTitle={props.onEditListTitle}/>
                 ))}
                 <br></br>
                 <ol>
@@ -41,7 +43,8 @@ const ListsList = (props: {
                             onDeleteListUpdate={props.onDeleteListUpdate}
                             buildInList={!buildInList}
                             items={props.items}
-                            lists={props.lists}/>
+                            lists={props.lists}
+                            onEditListTitle={props.onEditListTitle}/>
                     ))}
                 </ol>
             </div>
