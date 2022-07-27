@@ -6,7 +6,6 @@ import {ListInterface} from "./lists/List";
 import {TASKTYPE} from "./TaskStatus";
 
 import "./pages/Todos.css"
-import './charts/Chart.css'
 import './ItemsList.css'
 
 const INITIAL_LIST_ARRAY: ListInterface[] = [
@@ -47,8 +46,6 @@ const ItemListCommunication = () => {
     let listsInitialArray: ListInterface[] = INITIAL_LIST_ARRAY;
     let itemsCopyArray: ItemInterface[] = items;
     let listsCopyArray: ListInterface[] = lists;
-
-    console.log(selectedList);
 
     useEffect(() => {
         localStorage.setItem('inistial-lists', JSON.stringify(listsInitialArray));
@@ -234,11 +231,9 @@ const ItemListCommunication = () => {
 
     const onEditListTitle = (listId: number, listTitle: string, lists: ListInterface[]) => {
         let findItem = lists.findIndex(list => list.id === listId);
-        console.log(listId + " " + lists[findItem].title);
         lists[findItem].title = listTitle;
         setLists(lists);
         localStorage.setItem('lists', JSON.stringify(lists));
-        console.log(lists);
     }
 
     return (

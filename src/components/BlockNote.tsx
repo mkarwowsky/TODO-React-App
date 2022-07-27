@@ -1,11 +1,7 @@
 import {TASKTYPE} from "./TaskStatus";
-import "./Item.css"
 import BlockNoteForm from "./BlockNoteForm";
 
-
 const BlockNote = (props: { itemId: number, blockNote?: string, itemStatus: TASKTYPE, onItemBlockNoteUpdate: Function }) => {
-
-
     return (
         <div>
             {props.itemStatus === TASKTYPE.BLOCKED && (

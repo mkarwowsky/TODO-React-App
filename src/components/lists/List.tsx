@@ -1,7 +1,7 @@
 import {ItemInterface} from "../Item";
 import {TASKTYPE} from "../TaskStatus"
 import {AiOutlineDelete, AiOutlineEdit} from "react-icons/ai"
-import {useEffect, useState} from "react";
+import {useState} from "react";
 
 import "./List.css"
 import "../Form.css"
@@ -37,9 +37,7 @@ const List = (props: {
         setEnteredListTitle(event.currentTarget.value);
     };
 
-    const handleClick = () => {
-        props.onChooseList(listItem, props.items);
-    }
+    const handleClick = () => props.onChooseList(listItem, props.items);
 
     const onHandleDeleteList = () => {
         const findItem = props.lists.findIndex(itemTooDo => itemTooDo.id === listItem.id);
@@ -55,15 +53,15 @@ const List = (props: {
     }
 
     return (
-            <div className="list__list">
-                <div className="list__list-items">
-                    <div className="item-button-list" onClick={handleClick}>{props.listInterface.title}</div>
-                    {props.buildInList === false &&
-                        <div className="task-status-button" onClick={onHandleDeleteList}><AiOutlineDelete/></div>}
-                    {props.buildInList === false &&
-                        <button className="task-status-button" onClick={() => setIsListEdit(!isListEdit)} type="submit"><AiOutlineEdit/></button>}
-                </div>
-                {isListEdit && !props.buildInList && <div className="form__input-edit-item">
+        <div className="list__list">
+            <div className="list__list-items">
+                <div className="item-button-list" onClick={handleClick}>{props.listInterface.title}</div>
+                {props.buildInList === false && <div className="task-status-button" onClick={onHandleDeleteList}><AiOutlineDelete/></div>}
+                {props.buildInList === false && <button className="task-status-button" onClick={() => setIsListEdit(!isListEdit)} type="submit"><AiOutlineEdit/></button>}
+            </div>
+
+            {isListEdit && !props.buildInList &&
+                <div className="form__input-edit-item">
                     <form onSubmit={submitHandler}>
                         <div>
                             <input className="form__input"
@@ -76,12 +74,8 @@ const List = (props: {
                             />
                         </div>
                     </form>
-                </div>
-                }
-                <div>
-
-                </div>
-            </div>
+                </div>}
+        </div>
     )
 }
 

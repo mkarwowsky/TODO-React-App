@@ -52,7 +52,7 @@ const Item = (props: {
     }
 
     const onHandleDeleteItem = () => {
-        if(props.itemInterface.type !== TASKTYPE.BLOCKED) {
+        if (props.itemInterface.type !== TASKTYPE.BLOCKED) {
             setStatus(TASKTYPE.DELETED);
             setIsDeleted("task-status-button-deleted");
             props.onItemDeleteUpdate(props.itemInterface.id, props.itemInterface.type, props.onItemDeleteUpdate);

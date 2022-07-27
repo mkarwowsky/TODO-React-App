@@ -1,3 +1,13 @@
+# Additional functionality is editing list names.
+1. Go to src/components/lists/
+2. Find List.tsx component
+3. In JSX Code you will find button (there is only one button tag) which is responsible for opening edit field. Clicking on button will change property status isListEdit which will reveal or hide edit field depends on it state.
+4. There is a form (there is only one form tag) which is responsible for entering new title of list. Submiting new title name with "Enter" will run submitHandler function.
+5. submitHandler is looking over lists finding the one is clicked, assignes to it's property "title" a new list title.
+6. Props are sent over parents to ItemListCommunication.tsx component.
+7. In ItemListCommunication component You will find onEditListTitle function which is responsible for setting new state for edited list.
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).

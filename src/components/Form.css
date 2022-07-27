@@ -1,29 +1,3 @@
-.form__template {
-    background: #0276aa;
-    border: 1px solid #0276aa;
-    text-align: center;
-    padding: 0.5rem;
-    margin: 0.5rem;
-    width: auto;
-}
-
-.input__control {
-    margin: 0 0 0.5rem 0;
-    align-self: center;
-    font-family: 'Roboto', sans-serif;
-    color: #333;
-    font-size: 0.8rem;
-    padding: 0.25rem 0.5rem;
-    border-radius: 0.2rem;
-    background-color: rgb(255, 255, 255);
-    border: none;
-    display: block;
-    border-bottom: 0.3rem solid transparent;
-    transition: all 0.3s;
-    width: 20vw;
-    display: inline-flex;
-}
-
 .input__control:placeholder-shown + .form__label {
     opacity: 0;
     visibility: hidden;

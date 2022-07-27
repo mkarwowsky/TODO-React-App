@@ -1,6 +1,20 @@
-import {useState, useEffect, useRef} from "react";
+import {useState, useEffect} from "react";
+import {makeStyles} from '@mui/styles';
 
-import './Chart.css'
+const useStyles = makeStyles(({
+    chart__chartRevealed: ({
+        height: 'auto',
+        maxWidth: '20rem',
+        display: 'flex',
+        wordBreak: 'break-all',
+    }),
+    chart__chart: ({
+        height: 'auto',
+        maxWidth: '20rem',
+        display: 'flex',
+        wordBreak: 'break-all',
+    }),
+}));
 
 const Chart = (props: {
     itemId: number,
@@ -10,6 +24,7 @@ const Chart = (props: {
     onItemClickRevealUpdate: Function,
     onItemKeyPressRevealUpdate: Function
 }) => {
+    const classes = useStyles();
     const [isRevealed, setIsRevealed] = useState(props.revealStatus);
     const [description, setDescription] = useState(props.description);
 
@@ -22,21 +37,11 @@ const Chart = (props: {
         props.onItemClickRevealUpdate(props.itemId, isRevealed);
     }
 
-    // const onItemKeyPressRevealUpdate = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    //     if (event.key === "Tab") {
-    //         setIsRevealed(!isRevealed);
-    //         props.onItemKeyPressRevealUpdate(props.itemId, isRevealed);
-    //     }
-    // }
-
     return (
-        <div
-            onFocus={onHandleClick}
-            onClick={onHandleClick}
-            // onKeyUp={onItemKeyPressRevealUpdate}
-        > {
-            isRevealed ? <div tabIndex={props.tabIndex} className="chart__chart-revealed">{props.description}</div> :
-                <div tabIndex={props.tabIndex} className="chart__chart">{description}</div>}
+        <div onFocus={onHandleClick} onClick={onHandleClick}>
+            {isRevealed ?
+                <div tabIndex={props.tabIndex} className={classes.chart__chartRevealed}>{props.description}</div> :
+                <div tabIndex={props.tabIndex} className={classes.chart__chart}>{description}</div>}
         </div>
     )
 }

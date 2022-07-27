@@ -6,9 +6,7 @@ import '../Form.css'
 const ListsForm = (props: { onSaveListData: Function }) => {
     const [enteredListTitle, setEnteredListTitle] = useState<string>('');
     const [addList, setAddList] = useState<boolean>(true);
-    const titleChangeHandler = (event: React.FormEvent<HTMLInputElement>) => {
-        setEnteredListTitle(event.currentTarget.value);
-    };
+    const titleChangeHandler = (event: React.FormEvent<HTMLInputElement>) => setEnteredListTitle(event.currentTarget.value);
 
     const submitHandler = (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();

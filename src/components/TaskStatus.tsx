@@ -1,7 +1,8 @@
 import {useEffect, useState} from 'react';
+import {MdOutlineDoneOutline} from "react-icons/md"
+
 import './TaskStatus.css'
 import './Item.css'
-import {MdOutlineDoneOutline} from "react-icons/md"
 
 export enum TASKTYPE {
     TODO = "TODO",
@@ -13,15 +14,23 @@ export enum TASKTYPE {
 }
 
 const TaskStatus = (props: { itemId: number, itemStatus: TASKTYPE}) => {
-    const [isDone, setIsDone] = useState("task-status-button-todo")
+    const [classOfFinishedTask, setClassOfFinishedTask] = useState(true);
+
+    const getItemClass = () => {
+        if (classOfFinishedTask) {
+            return "task-status-button"
+        } else {
+            return "task-status-button-todo"
+        };
+    }
 
     useEffect(() => {
-        (props.itemStatus === TASKTYPE.DONE) ? setIsDone("task-status-button-todo") : setIsDone("task-status-button");
+        (props.itemStatus === TASKTYPE.DONE) ? setClassOfFinishedTask(false) : setClassOfFinishedTask(true);
     })
 
     return (
         <div>
-            <div className={isDone}>
+            <div className={getItemClass()}>
                 <b>{(props.itemStatus === TASKTYPE.DONE) ? <MdOutlineDoneOutline/> : 'TODO'}</b>
             </div>
         </div>
