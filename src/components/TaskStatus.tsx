@@ -14,10 +14,10 @@ export enum TASKTYPE {
 }
 
 const TaskStatus = (props: { itemId: number, itemStatus: TASKTYPE}) => {
-    const [classOfFinishedTask, setClassOfFinishedTask] = useState(true);
+    const [isDone, setIsDone] = useState(true);
 
     const getItemClass = () => {
-        if (classOfFinishedTask) {
+        if (isDone) {
             return "task-status-button"
         } else {
             return "task-status-button-todo"
@@ -25,7 +25,7 @@ const TaskStatus = (props: { itemId: number, itemStatus: TASKTYPE}) => {
     }
 
     useEffect(() => {
-        (props.itemStatus === TASKTYPE.DONE) ? setClassOfFinishedTask(false) : setClassOfFinishedTask(true);
+        (props.itemStatus === TASKTYPE.DONE) ? setIsDone(false) : setIsDone(true);
     })
 
     return (
