@@ -47,6 +47,8 @@ const ItemListCommunication = () => {
     let itemsCopyArray: ItemInterface[] = items;
     let listsCopyArray: ListInterface[] = lists;
 
+
+
     useEffect(() => {
         localStorage.setItem('inistial-lists', JSON.stringify(listsInitialArray));
     }, []);
